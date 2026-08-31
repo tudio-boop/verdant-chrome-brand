@@ -1,32 +1,38 @@
-# Verdant Chrome — Brand Design System
+# Stonehaven — material board
 
-**Chrome × Organic × Liquid Glass**  
-Tagline: *Technology that breathes.*
+Brand language taken from the live site, not invented.
+
+**Sources**
+
+- `tudio-boop/stonehaven-website` — 3-pane landing, labeled boxes, invert CTAs, wireframe grammar
+- `tudio-boop/stonehaven-psg` — `tokens.css`, liquid-glass nav, Syne / Sora / IBM Plex Mono, film grain
+- `<stonehaven-avatar>` — chrome sphere fallback, Entertainment violet, Promotions blue
+
+AND, never &. Domain stonehavenentertainment.com. Do not invent logos, clients, or metrics.
 
 ## Files
 
 | File | Purpose |
 |------|---------|
-| `design-tokens.css` | CSS custom properties + utility classes |
-| `design-tokens.json` | Platform-agnostic tokens (Figma, Style Dictionary, JS) |
-| `COMPONENTS.md` | Component specs — buttons, cards, nav, inputs, motion |
-| `mood-board.html` | Interactive visual mood board (open in browser) |
+| `mood-board.html` | Material board (open in browser) |
+| `design-tokens.css` | Tokens copied from stonehaven-psg + lane tints |
+| `design-tokens.json` | Same, machine-readable |
+| `COMPONENTS.md` | Parts already on the site |
 
-## Quick Start
+## Lanes
 
-```html
-<link rel="stylesheet" href="design-tokens.css">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans&family=Syne:wght@600;700&display=swap" rel="stylesheet">
-```
+| Lane | Use | Tint |
+|------|-----|------|
+| Entertainment | left pane | `#9A68FF` / `#7A3CFF` / `#D43CFF` |
+| Threshold | center / Ask | chrome on `#0A0A0A`, no chroma |
+| Promotions | right pane | `#2F6BFF` |
 
-## View Mood Board
+## Surfaces
 
-Open `mood-board.html` in a browser. Click any of the five color ways to live-preview palette swaps.
+1. **Chrome** — metallic radial on the kinetic sphere (`#D8DAE2` → `#17181E`)
+2. **Liquid glass** — nav pill `blur(22px) saturate(1.2)`; caption `blur(16px) saturate(1.4)`
+3. **Kinetic** — living glyph. Not blobs, not plants.
 
-## Primary Palette — Verdant Chrome
+## Type
 
-- **Base:** `#0D1410` (Forest void)
-- **Glass tint:** `#D4E8D4` @ 8–12%
-- **Chrome:** `#9CA89C` → `#D4DCD4`
-- **Organic:** `#4ADE80`
-- **Highlight:** `#FBBF24`
+Syne (display) · Sora (body) · IBM Plex Mono (index / nav / labels)

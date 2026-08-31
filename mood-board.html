@@ -3,691 +3,513 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Brand Mood Board — Chrome × Organic × Liquid Glass</title>
+  <title>STONEHAVEN / Material</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Sora:wght@300;400;500;600&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="design-tokens.css">
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; background: var(--bg); color: var(--fg); }
     body {
-      font-family: var(--font-body);
-      background: var(--color-base-void);
-      color: var(--color-text-primary);
-      line-height: var(--leading-normal);
-      overflow-x: hidden;
+      font-family: var(--sans);
+      font-size: var(--step-body);
+      line-height: 1.55;
+      font-weight: 400;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: clip;
     }
-
-    /* ─── Ambient blobs ─── */
-    .ambient {
+    body::before {
+      content: "";
       position: fixed;
       inset: 0;
       pointer-events: none;
-      z-index: var(--z-blob);
-      overflow: hidden;
+      z-index: 80;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      mix-blend-mode: soft-light;
     }
-    .blob {
-      position: absolute;
-      border-radius: var(--radius-blob);
-      filter: blur(80px);
-      animation: drift var(--duration-drift) var(--ease-drift) infinite alternate;
-    }
-    .blob-1 {
-      width: 600px; height: 500px;
-      top: -10%; left: -5%;
-      background: radial-gradient(circle, rgba(74,222,128,0.15) 0%, transparent 70%);
-    }
-    .blob-2 {
-      width: 450px; height: 400px;
-      bottom: 10%; right: -8%;
-      background: radial-gradient(circle, rgba(251,191,36,0.08) 0%, transparent 70%);
-      animation-delay: -4s;
-    }
-    @keyframes drift {
-      0% { transform: translate(0, 0) scale(1); border-radius: 60% 40% 55% 45% / 45% 55% 40% 60%; }
-      100% { transform: translate(30px, -20px) scale(1.05); border-radius: 45% 55% 40% 60% / 60% 40% 55% 45%; }
-    }
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; color: inherit; }
+    button { cursor: pointer; border: 0; background: none; }
 
-    /* ─── Layout ─── */
-    .board {
+    .skip {
+      position: absolute; left: 1rem; top: -4rem; z-index: 100;
+      padding: 0.65rem 1rem; background: var(--paper); color: var(--ink);
+      font-family: var(--mono); font-size: var(--step-xs);
+      letter-spacing: 0.12em; text-transform: uppercase;
+    }
+    .skip:focus { top: 1rem; }
+
+    /* Nav — lifted from LiquidGlassNavigation.css */
+    .liq-nav {
+      position: fixed; z-index: 50;
+      top: 0.85rem; left: 50%; transform: translateX(-50%);
+      width: min(980px, calc(100vw - 1.25rem));
+    }
+    .liq-nav__glass {
       position: relative;
-      z-index: var(--z-glass);
-      max-width: var(--container-2xl);
-      margin: 0 auto;
-      padding: var(--space-8) var(--space-6) var(--space-32);
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+      min-height: var(--nav-h);
+      padding: 0.45rem 0.7rem 0.45rem 1.05rem;
+      border-radius: 999px;
+    }
+    .liq-nav__glass::before {
+      content: "";
+      position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+      border-top: 1px solid var(--rim); opacity: 0.85;
+    }
+    .liq-nav__mark {
+      font-family: var(--display); font-size: 0.92rem; font-weight: 700; letter-spacing: 0.18em;
+    }
+    .liq-nav__sub {
+      display: block;
+      font-family: var(--mono); font-size: 0.52rem; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--muted);
+    }
+    .liq-nav__desktop { display: flex; gap: 0.1rem; }
+    .liq-nav__desktop a {
+      padding: 0.55rem 0.7rem; border-radius: 999px;
+      font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: rgba(245, 245, 243, 0.72);
+    }
+    .liq-nav__desktop a[aria-current="page"] {
+      color: #fff; background: var(--glass-strong);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+    }
+    @media (max-width: 720px) { .liq-nav__desktop { display: none; } }
+
+    .wrap { width: var(--content); margin-inline: auto; }
+    .chapter {
+      position: relative;
+      padding: clamp(4.5rem, 12vh, 9rem) 0;
+    }
+    .chapter::before {
+      content: "";
+      position: absolute;
+      left: max(1.1rem, calc((100vw - min(1180px, calc(100vw - 2.5rem))) / 2 - 1.6rem));
+      top: 0; bottom: 0; width: 1px;
+      background: linear-gradient(180deg, transparent, var(--stroke) 12%, var(--stroke) 88%, transparent);
+      pointer-events: none; opacity: 0.55;
+    }
+    @media (max-width: 1100px) { .chapter::before { display: none; } }
+
+    .eyebrow {
+      margin: 0 0 1.25rem;
+      font-family: var(--mono); font-size: var(--step-xs); font-weight: 500;
+      letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted);
+    }
+    .display {
+      margin: 0;
+      font-family: var(--display); font-weight: 700;
+      letter-spacing: -0.045em; line-height: 0.92;
+      text-wrap: balance;
+    }
+    .lede {
+      margin: 1.5rem 0 0; max-width: 34rem;
+      color: var(--muted); font-weight: 300; font-size: var(--step-lg); line-height: 1.35;
+    }
+    .mono-note {
+      font-family: var(--mono); font-size: var(--step-xs);
+      letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted);
     }
 
-    .board-header {
+    /* Hero */
+    .hero {
+      min-height: 100svh;
+      display: grid; align-items: end;
+      padding-top: calc(6.5rem);
+      padding-bottom: clamp(3rem, 10vh, 6rem);
+    }
+    .hero__inner { position: relative; padding-bottom: 2rem; }
+    .hero h1 { font-size: var(--step-hero); max-width: 12ch; }
+    .hero h1 span { display: block; }
+    .hero__glyph {
+      position: absolute; right: 0; top: 18%;
+      font-size: clamp(4rem, 14vw, 10rem);
+      font-family: var(--display);
+      color: rgba(255, 255, 255, 0.06);
+      line-height: 1; user-select: none;
+    }
+    @media (min-width: 721px) {
+      .hero { align-items: center; }
+    }
+
+    /* 3-pane lanes — website landing grammar */
+    .lanes {
+      display: grid;
+      grid-template-columns: 1fr;
+      border-top: 1px solid var(--stroke);
+      border-bottom: 1px solid var(--stroke);
+    }
+    @media (min-width: 900px) {
+      .lanes { grid-template-columns: 1fr 1fr 1fr; }
+    }
+    .lane {
+      padding: 2.5rem 1.5rem 3rem;
+      border-bottom: 1px solid var(--stroke);
+      min-height: 22rem;
+      display: flex; flex-direction: column;
+      position: relative;
+    }
+    @media (min-width: 900px) {
+      .lane { border-bottom: 0; border-right: 1px solid var(--stroke); min-height: 28rem; }
+      .lane:last-child { border-right: 0; }
+    }
+    .lane h2 {
+      font-family: var(--display); font-size: var(--step-xl);
+      letter-spacing: -0.04em; line-height: 0.95; margin: 0 0 auto;
+    }
+    .lane p { color: var(--muted); max-width: 28ch; margin: 1.25rem 0 0; font-weight: 300; }
+    .lane--threshold { background: #0a0a0a; }
+    .swatch-row { display: flex; gap: 8px; margin-top: 1.5rem; }
+    .swatch {
+      width: 28px; height: 28px;
+      border: 1px solid var(--stroke);
+    }
+    .hex {
+      font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.08em;
+      color: var(--muted); margin-top: 0.85rem;
+    }
+
+    /* Materials */
+    .mats {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1px;
+      background: var(--stroke);
+      border: 1px solid var(--stroke);
+    }
+    @media (min-width: 800px) { .mats { grid-template-columns: 1fr 1fr 1fr; } }
+    .mat {
+      background: var(--bg);
+      padding: 2rem 1.5rem 2.25rem;
+      min-height: 22rem;
+      display: flex; flex-direction: column;
+    }
+    .mat__stage {
+      flex: 1; display: grid; place-items: center; min-height: 12rem;
+    }
+    .sphere {
+      width: min(42vmin, 180px); aspect-ratio: 1; border-radius: 50%;
+    }
+    .sphere--ent {
+      box-shadow:
+        inset 0 2px 6px rgba(255, 255, 255, 0.5),
+        inset 0 -10px 24px rgba(10, 10, 12, 0.55),
+        0 0 0 1px rgba(154, 104, 255, 0.22),
+        0 0 36px rgba(122, 60, 255, 0.18);
+    }
+    .sphere--pro {
+      box-shadow:
+        inset 0 2px 6px rgba(255, 255, 255, 0.5),
+        inset 0 -10px 24px rgba(10, 10, 12, 0.55),
+        0 0 0 1px rgba(47, 107, 255, 0.14),
+        0 18px 44px rgba(24, 26, 34, 0.1);
+    }
+    .glass-demo {
+      width: min(100%, 220px);
+      padding: 0.7rem 1rem;
+      border-radius: 999px;
       text-align: center;
-      padding: var(--space-16) 0 var(--space-12);
     }
-    .board-header .eyebrow {
-      font-size: var(--text-sm);
-      font-weight: var(--weight-semibold);
-      letter-spacing: var(--tracking-wider);
-      text-transform: uppercase;
-      color: var(--color-organic-primary);
-      margin-bottom: var(--space-4);
+    .glass-demo strong {
+      display: block; font-family: var(--display); letter-spacing: 0.18em; font-size: 0.78rem;
     }
-    .board-header h1 {
-      font-family: var(--font-display);
-      font-size: clamp(var(--text-3xl), 5vw, var(--text-5xl));
-      font-weight: var(--weight-bold);
-      line-height: var(--leading-tight);
-      letter-spacing: var(--tracking-tight);
-      margin-bottom: var(--space-4);
+    .glass-demo span {
+      display: block; font-family: var(--mono); font-size: 0.5rem;
+      letter-spacing: 0.16em; text-transform: uppercase; margin-top: 0.15rem;
+      color: inherit; opacity: 0.6;
     }
-    .board-header .tagline {
-      font-size: var(--text-lg);
-      color: var(--color-text-secondary);
-      max-width: 480px;
-      margin: 0 auto;
+    .caption-demo {
+      width: min(100%, 200px);
+      padding: 0.55rem 0.9rem 0.65rem;
+      border-radius: 12px;
+      text-align: center;
+      font-size: 0.78rem;
+    }
+    .mat footer { margin-top: 1.5rem; }
+
+    /* Invert paper chapter */
+    .invert { background: var(--invert-bg); color: var(--invert-fg); }
+    .invert .eyebrow, .invert .mono-note, .invert .lede { color: rgba(10, 12, 16, 0.55); }
+    .invert.chapter::before {
+      background: linear-gradient(180deg, transparent, rgba(10,12,16,0.14) 12%, rgba(10,12,16,0.14) 88%, transparent);
     }
 
-    .section-label {
-      font-size: var(--text-xs);
-      font-weight: var(--weight-semibold);
-      letter-spacing: var(--tracking-wider);
-      text-transform: uppercase;
-      color: var(--color-text-tertiary);
-      margin-bottom: var(--space-4);
-    }
-
-    section { margin-bottom: var(--space-16); }
-
-    /* ─── Palette grid ─── */
-    .palette-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: var(--space-4);
-    }
-    .palette-card {
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      cursor: pointer;
-      transition: transform var(--duration-normal) var(--ease-liquid),
-                  box-shadow var(--duration-normal) var(--ease-smooth);
-      border: 2px solid transparent;
-    }
-    .palette-card:hover { transform: translateY(-4px); }
-    .palette-card.active {
-      border-color: var(--color-organic-primary);
-      box-shadow: var(--shadow-glow-organic);
-    }
-    .palette-swatch {
-      height: 120px;
+    /* Labeled box — wireframe.css */
+    .box {
+      border: 1px solid currentColor;
       position: relative;
-      display: flex;
-      align-items: flex-end;
-      padding: var(--space-3);
+      padding: 28px 16px 16px;
+      background: transparent;
     }
-    .palette-info {
-      padding: var(--space-4);
-      background: var(--color-base-surface);
+    .box > .lbl {
+      position: absolute; top: 0; left: 0;
+      border-right: 1px solid currentColor;
+      border-bottom: 1px solid currentColor;
+      font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em;
+      text-transform: uppercase; padding: 2px 8px;
     }
-    .palette-info h3 {
-      font-family: var(--font-display);
-      font-size: var(--text-md);
-      font-weight: var(--weight-semibold);
-      margin-bottom: var(--space-1);
+    .grid2 { display: grid; gap: 12px; }
+    @media (min-width: 800px) { .grid2 { grid-template-columns: 1fr 1fr; } }
+
+    .cta {
+      display: inline-block;
+      border: 1px solid currentColor;
+      padding: 6px 12px;
+      font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin: 4px 4px 0 0;
     }
-    .palette-info p {
-      font-size: var(--text-sm);
-      color: var(--color-text-tertiary);
+    .cta.solid { background: var(--ink); color: var(--paper); }
+    .cta.solid:hover { background: transparent; color: inherit; }
+    .cta:hover { background: var(--ink); color: var(--paper); }
+
+    form label {
+      display: block; margin: 10px 0 4px;
+      font-family: var(--mono); font-size: 12px;
+      text-transform: uppercase; letter-spacing: 0.05em;
     }
-    .palette-dots {
-      display: flex;
-      gap: 6px;
-      margin-top: var(--space-3);
-    }
-    .palette-dots span {
-      width: 20px; height: 20px;
-      border-radius: var(--radius-full);
-      border: 1px solid rgba(255,255,255,0.15);
+    form input {
+      width: 100%; max-width: 480px;
+      border: 1px solid currentColor; background: transparent;
+      padding: 6px 8px;
     }
 
-    /* ─── Featured system ─── */
-    .featured-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--space-6);
-    }
-    @media (max-width: 768px) {
-      .featured-grid { grid-template-columns: 1fr; }
-    }
-
-    .token-swatch-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: var(--space-2);
-    }
-    .token-swatch {
-      aspect-ratio: 1;
-      border-radius: var(--radius-md);
-      display: flex;
-      align-items: flex-end;
-      padding: var(--space-2);
-      font-size: 10px;
-      font-weight: var(--weight-medium);
-      color: rgba(255,255,255,0.8);
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-
-    /* ─── Component showcase ─── */
-    .component-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--space-4);
-      align-items: center;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--font-body);
-      font-weight: var(--weight-semibold);
-      font-size: 15px;
-      height: var(--button-height-md);
-      padding: 0 var(--space-6);
-      border-radius: var(--radius-full);
-      border: none;
-      cursor: pointer;
-      transition: transform var(--duration-normal) var(--ease-liquid),
-                  box-shadow var(--duration-normal) var(--ease-smooth),
-                  background var(--duration-normal) var(--ease-smooth);
-    }
-    .btn:active { transform: scale(0.98); }
-
-    .btn-primary {
-      background: var(--color-organic-primary);
-      color: var(--color-text-inverse);
-      box-shadow: var(--shadow-glow-organic);
-    }
-    .btn-primary:hover { transform: scale(1.02); }
-
-    .btn-glass {
-      background: var(--color-glass-fill);
-      color: var(--color-text-primary);
-      border: 1px solid var(--color-glass-border);
-      backdrop-filter: blur(var(--blur-glass-md));
-    }
-    .btn-glass:hover { background: var(--color-glass-fill-hover); transform: scale(1.02); }
-
-    .btn-chrome {
-      background: var(--gradient-chrome);
-      color: var(--color-text-inverse);
-      position: relative;
-      overflow: hidden;
-    }
-    .btn-chrome::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.4) 50%, transparent 60%);
-      transform: translateX(-100%);
-      transition: transform 500ms var(--ease-smooth);
-    }
-    .btn-chrome:hover::after { transform: translateX(100%); }
-    .btn-chrome:hover { transform: scale(1.02); }
-
-    .demo-card {
-      padding: var(--space-6);
-      max-width: 360px;
-    }
-    .demo-card h4 {
-      font-family: var(--font-display);
-      font-size: var(--text-xl);
-      font-weight: var(--weight-semibold);
-      margin-bottom: var(--space-2);
-    }
-    .demo-card p {
-      font-size: var(--text-sm);
-      color: var(--color-text-secondary);
-      margin-bottom: var(--space-4);
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      height: 28px;
-      padding: 0 var(--space-3);
-      border-radius: var(--radius-full);
-      font-size: var(--text-xs);
-      font-weight: var(--weight-semibold);
-      letter-spacing: var(--tracking-wide);
-    }
-    .badge-organic {
-      background: var(--color-organic-primary-muted);
-      color: var(--color-organic-primary);
-    }
-    .badge-chrome {
-      background: var(--gradient-chrome);
-      color: var(--color-text-inverse);
-    }
-    .badge-glass {
-      background: var(--color-glass-fill);
-      color: var(--color-text-secondary);
-      border: 1px solid var(--color-glass-border);
-    }
-
-    /* ─── Typography showcase ─── */
-    .type-scale { display: flex; flex-direction: column; gap: var(--space-6); }
+    /* Type scale */
     .type-row {
-      display: flex;
+      display: grid;
+      grid-template-columns: 7rem 1fr;
+      gap: 1.5rem;
+      padding: 1.25rem 0;
+      border-bottom: 1px solid var(--stroke);
       align-items: baseline;
-      gap: var(--space-6);
-      padding-bottom: var(--space-4);
-      border-bottom: 1px solid var(--color-glass-border);
     }
-    .type-meta {
-      flex-shrink: 0;
-      width: 100px;
-      font-size: var(--text-xs);
-      color: var(--color-text-tertiary);
-      font-family: var(--font-mono);
-    }
+    .type-row:last-child { border-bottom: 0; }
+    .type-meta { font-family: var(--mono); font-size: var(--step-xs); letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+    .invert .type-row { border-color: var(--stroke-dark); }
 
-    /* ─── Material samples ─── */
-    .materials {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: var(--space-4);
-    }
-    @media (max-width: 768px) {
-      .materials { grid-template-columns: 1fr; }
-    }
-    .material {
-      height: 200px;
-      border-radius: var(--radius-xl);
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: var(--space-4);
-      position: relative;
-      overflow: hidden;
-    }
-    .material-label {
-      font-family: var(--font-display);
-      font-weight: var(--weight-semibold);
-      font-size: var(--text-md);
-      position: relative;
-      z-index: 1;
-    }
-    .material-desc {
-      font-size: var(--text-sm);
-      color: var(--color-text-secondary);
-      position: relative;
-      z-index: 1;
-    }
-
-    .mat-glass {
-      background: var(--color-glass-fill);
-      backdrop-filter: blur(var(--blur-glass-lg));
-      border: 1px solid var(--color-glass-border);
-      box-shadow: var(--glass-specular), var(--glass-depth);
-    }
-    .mat-chrome {
-      background: var(--gradient-chrome);
-    }
-    .mat-chrome .material-label,
-    .mat-chrome .material-desc { color: var(--color-text-inverse); }
-    .mat-organic {
-      background: var(--color-base-deep);
-      border: 1px solid rgba(74,222,128,0.2);
-    }
-    .mat-organic::before {
-      content: '';
-      position: absolute;
-      inset: -50%;
-      background: var(--gradient-organic-blob);
-      animation: drift var(--duration-drift) var(--ease-drift) infinite alternate;
-    }
-
-    /* ─── Input demo ─── */
-    .demo-input {
+    .token-table {
       width: 100%;
-      max-width: 320px;
-      height: var(--input-height);
-      background: rgba(212,232,212,0.06);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: var(--radius-md);
-      padding: 0 var(--space-4);
-      font-family: var(--font-body);
-      font-size: var(--text-base);
-      color: var(--color-text-primary);
-      outline: none;
-      transition: border-color var(--duration-fast), box-shadow var(--duration-fast);
+      border-collapse: collapse;
+      font-family: var(--mono); font-size: 0.72rem;
     }
-    .demo-input::placeholder { color: var(--color-text-tertiary); }
-    .demo-input:focus {
-      border-color: rgba(74,222,128,0.6);
-      box-shadow: 0 0 0 3px rgba(74,222,128,0.15);
+    .token-table th, .token-table td {
+      text-align: left; padding: 0.65rem 0.4rem;
+      border-bottom: 1px solid var(--stroke);
+      font-weight: 400;
     }
+    .token-table th { color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; font-size: 0.58rem; }
+    .chip { display: inline-block; width: 12px; height: 12px; border: 1px solid var(--stroke); vertical-align: middle; margin-right: 8px; }
 
-    .refraction-divider {
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(74,222,128,0.4), transparent);
-      margin: var(--space-8) 0;
+    .site-footer {
+      border-top: 1px solid var(--stroke);
+      padding: 2rem 0 3rem;
     }
-
-    /* ─── Principles strip ─── */
-    .principles {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: var(--space-4);
+    .site-footer__inner {
+      display: flex; justify-content: space-between; gap: 1.5rem; align-items: end; flex-wrap: wrap;
     }
-    @media (max-width: 768px) {
-      .principles { grid-template-columns: 1fr; }
+    .site-footer strong {
+      display: block; font-family: var(--display); letter-spacing: 0.18em; font-size: 0.95rem; margin-bottom: 0.35rem;
     }
-    .principle {
-      padding: var(--space-6);
-      text-align: center;
-    }
-    .principle-icon {
-      width: 48px; height: 48px;
-      margin: 0 auto var(--space-4);
-      border-radius: var(--radius-md);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-    }
-    .principle h4 {
-      font-family: var(--font-display);
-      font-size: var(--text-md);
-      margin-bottom: var(--space-2);
-    }
-    .principle p {
-      font-size: var(--text-sm);
-      color: var(--color-text-secondary);
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .blob, .mat-organic::before { animation: none; }
-      .btn-chrome::after { display: none; }
-    }
+    .site-footer .mono-note { margin: 0; }
   </style>
 </head>
 <body>
-  <div class="ambient" aria-hidden="true">
-    <div class="blob blob-1"></div>
-    <div class="blob blob-2"></div>
+  <a class="skip" href="#material">Skip to material</a>
+
+  <header class="liq-nav">
+    <div class="liq-nav__glass glass-nav">
+      <a class="liq-nav__brand" href="#top">
+        <span class="liq-nav__mark">STONEHAVEN</span>
+        <span class="liq-nav__sub">Entertainment AND Promotions</span>
+      </a>
+      <nav class="liq-nav__desktop" aria-label="Board">
+        <a href="#lanes" aria-current="page">Lanes</a>
+        <a href="#material">Material</a>
+        <a href="#type">Type</a>
+        <a href="#parts">Parts</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero wrap" id="top">
+    <div class="hero__inner">
+      <p class="eyebrow">STONEHAVEN / ENTERTAINMENT AND PROMOTIONS</p>
+      <h1 class="display">
+        <span>CHROME.</span>
+        <span>KINETIC.</span>
+        <span>GLASS.</span>
+      </h1>
+      <p class="lede">Not a palette generator. The same ink, paper, sphere, and liquid-glass nav already on the site.</p>
+      <p class="mono-note" style="margin-top:2.5rem">Sourced from stonehaven-website AND stonehaven-psg</p>
+      <div class="hero__glyph" aria-hidden="true">石</div>
+    </div>
+  </section>
+
+  <div class="lanes" id="lanes">
+    <article class="lane">
+      <p class="eyebrow">landing · left</p>
+      <h2>Entertainment</h2>
+      <p>Live work, events, production. Violet ring on the sphere. Dark caption glass.</p>
+      <div class="swatch-row">
+        <span class="swatch" style="background:#9a68ff"></span>
+        <span class="swatch" style="background:#7a3cff"></span>
+        <span class="swatch" style="background:#d43cff"></span>
+        <span class="swatch" style="background:#0e0e13"></span>
+      </div>
+      <p class="hex">#9A68FF &nbsp; #7A3CFF &nbsp; #D43CFF</p>
+    </article>
+    <article class="lane lane--threshold">
+      <p class="eyebrow">landing · center</p>
+      <h2>Threshold</h2>
+      <p>Ask. The kinetic sphere. No chroma. Chrome metal on #0A0A0A.</p>
+      <div class="swatch-row">
+        <span class="swatch" style="background:#d8dae2"></span>
+        <span class="swatch" style="background:#a9abb6"></span>
+        <span class="swatch" style="background:#383a44"></span>
+        <span class="swatch" style="background:#17181e"></span>
+      </div>
+      <p class="hex">#D8DAE2 → #17181E &nbsp; theme=threshold</p>
+    </article>
+    <article class="lane">
+      <p class="eyebrow">landing · right</p>
+      <h2>Promotions</h2>
+      <p>Growth systems and campaigns. Blue ring. Light caption glass on porcelain.</p>
+      <div class="swatch-row">
+        <span class="swatch" style="background:#2f6bff"></span>
+        <span class="swatch" style="background:#d5d8de"></span>
+        <span class="swatch" style="background:#fafaf8"></span>
+        <span class="swatch" style="background:#070809"></span>
+      </div>
+      <p class="hex">#2F6BFF &nbsp; porcelain #FAFAF8</p>
+    </article>
   </div>
 
-  <div class="board">
-    <header class="board-header">
-      <p class="eyebrow">Brand Design Language</p>
-      <h1><span class="chrome-text">Chrome</span> × Organic × Liquid Glass</h1>
-      <p class="tagline">Technology that breathes. Precision refracted through living form.</p>
-    </header>
-
-    <!-- Color Ways -->
-    <section>
-      <p class="section-label">Color Ways — click to preview</p>
-      <div class="palette-grid" id="paletteGrid"></div>
-    </section>
-
-    <div class="refraction-divider"></div>
-
-    <!-- Principles -->
-    <section>
-      <p class="section-label">Core Principles</p>
-      <div class="principles">
-        <div class="glass-panel principle">
-          <div class="principle-icon mat-glass" style="width:48px;height:48px;border-radius:12px;">💧</div>
-          <h4>Liquid Glass</h4>
-          <p>Frosted translucency, specular highlights, depth through blur and inner glow.</p>
+  <section class="chapter" id="material">
+    <div class="wrap">
+      <p class="eyebrow">01 / Material</p>
+      <h2 class="display" style="font-size:var(--step-display);margin-bottom:2.5rem;">Three surfaces.<br>Nothing else.</h2>
+      <div class="mats">
+        <div class="mat">
+          <p class="mono-note">Chrome</p>
+          <div class="mat__stage">
+            <div class="sphere chrome-sphere" aria-hidden="true"></div>
+          </div>
+          <footer>
+            <p class="mono-note">avatar fallback · metallic radial</p>
+          </footer>
         </div>
-        <div class="glass-panel principle">
-          <div class="principle-icon" style="background:var(--gradient-chrome);border-radius:12px;">⚙️</div>
-          <h4>Chrome Precision</h4>
-          <p>Mirror gradients on edges and accents. Metallic, not metallic everywhere.</p>
-        </div>
-        <div class="glass-panel principle">
-          <div class="principle-icon" style="background:rgba(74,222,128,0.15);border-radius:12px;">🌿</div>
-          <h4>Organic Flow</h4>
-          <p>Soft blobs, asymmetrical curves, natural motion. Life inside the machine.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Featured Token System -->
-    <section>
-      <p class="section-label">Featured System — Verdant Chrome</p>
-      <div class="featured-grid">
-        <div class="glass-panel" style="padding: var(--space-6);">
-          <h3 style="font-family:var(--font-display);font-size:var(--text-lg);margin-bottom:var(--space-4);">Color Tokens</h3>
-          <div class="token-swatch-grid" id="tokenSwatches"></div>
-        </div>
-        <div class="glass-panel" style="padding: var(--space-6);">
-          <h3 style="font-family:var(--font-display);font-size:var(--text-lg);margin-bottom:var(--space-4);">Materials</h3>
-          <div class="materials">
-            <div class="material mat-glass">
-              <span class="material-label">Glass</span>
-              <span class="material-desc">Blur 48px · 8% fill</span>
+        <div class="mat">
+          <p class="mono-note">Liquid glass</p>
+          <div class="mat__stage" style="gap:1.25rem;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+            <div class="glass-demo glass-nav">
+              <strong>STONEHAVEN</strong>
+              <span>Entertainment AND Promotions</span>
             </div>
-            <div class="material mat-chrome">
-              <span class="material-label">Chrome</span>
-              <span class="material-desc">Gradient accent</span>
-            </div>
-            <div class="material mat-organic">
-              <span class="material-label">Organic</span>
-              <span class="material-desc">Living glow</span>
-            </div>
+            <div class="caption-demo glass-caption">Ask Stonehaven</div>
           </div>
+          <footer>
+            <p class="mono-note">nav 22px / caption 16px · saturate 1.2–1.4</p>
+          </footer>
+        </div>
+        <div class="mat">
+          <p class="mono-note">Kinetic</p>
+          <div class="mat__stage">
+            <div class="sphere chrome-sphere sphere--ent" aria-hidden="true"></div>
+          </div>
+          <footer>
+            <p class="mono-note">organic = glyph motion, not blobs</p>
+          </footer>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Components -->
-    <section>
-      <p class="section-label">Components</p>
-      <div class="featured-grid">
-        <div class="glass-panel demo-card">
-          <span class="badge badge-organic">New</span>
-          <h4 style="margin-top:var(--space-3);">Glass Card</h4>
-          <p>Elevated surface with backdrop blur, specular inset highlight, and organic border glow on hover.</p>
-          <div class="component-row">
-            <button class="btn btn-primary">Primary</button>
-            <button class="btn btn-glass">Glass</button>
-            <button class="btn btn-chrome">Chrome</button>
-          </div>
+  <section class="chapter invert" id="type">
+    <div class="wrap">
+      <p class="eyebrow">02 / Type</p>
+      <h2 class="display" style="font-size:var(--step-display);margin-bottom:0.5rem;">Syne / Sora / IBM Plex Mono</h2>
+      <p class="lede" style="margin-bottom:3rem;">Display locks up tight. Body is Sora. Meta is mono, uppercase, tracked.</p>
+      <div class="type-row">
+        <span class="type-meta">Hero</span>
+        <span class="display" style="font-size:clamp(2rem,5vw,3.6rem);">MOVE PEOPLE</span>
+      </div>
+      <div class="type-row">
+        <span class="type-meta">Display</span>
+        <span class="display" style="font-size:var(--step-xl);">Entertainment AND Promotions</span>
+      </div>
+      <div class="type-row">
+        <span class="type-meta">Body</span>
+        <span style="font-weight:300;max-width:36rem;">Live work, events, and production. Growth systems and campaigns. Career Twin under Solutions. No invented logos, clients, or metrics.</span>
+      </div>
+      <div class="type-row">
+        <span class="type-meta">Mono</span>
+        <span class="mono-note" style="color:inherit;">STONEHAVEN / PROMOTIONS, STRATEGY AND GROWTH</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" id="parts">
+    <div class="wrap">
+      <p class="eyebrow">03 / Parts</p>
+      <h2 class="display" style="font-size:var(--step-display);margin-bottom:2.5rem;">From the wireframe.</h2>
+      <div class="grid2">
+        <div class="box">
+          <span class="lbl">e1 · Hero</span>
+          <p class="mono-note">Entertainment</p>
+          <h3 class="display" style="font-size:var(--step-lg);margin:0.4rem 0 0.8rem;">Labeled box</h3>
+          <p style="color:var(--muted);font-weight:300;margin:0 0 1rem;">1px ink rule. Corner index. Invert hover. Same as the site stack.</p>
+          <a class="cta solid" href="#parts">Contact</a>
+          <a class="cta" href="#lanes">Ask Stonehaven</a>
         </div>
-        <div class="glass-panel" style="padding:var(--space-6);">
-          <p style="font-size:var(--text-sm);color:var(--color-text-secondary);margin-bottom:var(--space-2);">Email address</p>
-          <input class="demo-input" type="email" placeholder="you@brand.com">
-          <div style="margin-top:var(--space-6);display:flex;gap:var(--space-2);flex-wrap:wrap;">
-            <span class="badge badge-organic">Organic</span>
-            <span class="badge badge-chrome">Chrome</span>
-            <span class="badge badge-glass">Glass</span>
-          </div>
+        <div class="box">
+          <span class="lbl">p6 · Contact</span>
+          <form onsubmit="return false;">
+            <label for="n">Name</label>
+            <input id="n" name="name" autocomplete="name">
+            <label for="e">Email</label>
+            <input id="e" name="email" type="email" autocomplete="email">
+            <p style="margin-top:1rem;">
+              <button class="cta solid" type="button">Send via email</button>
+            </p>
+          </form>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Typography -->
-    <section>
-      <p class="section-label">Typography — Syne + DM Sans</p>
-      <div class="glass-panel" style="padding: var(--space-8);">
-        <div class="type-scale">
-          <div class="type-row">
-            <span class="type-meta">Display</span>
-            <span style="font-family:var(--font-display);font-size:var(--text-4xl);font-weight:700;letter-spacing:var(--tracking-tight);line-height:var(--leading-tight);">
-              <span class="chrome-text">Refraction</span>
-            </span>
-          </div>
-          <div class="type-row">
-            <span class="type-meta">H2 · 39px</span>
-            <span style="font-family:var(--font-display);font-size:var(--text-3xl);font-weight:600;">Living surfaces</span>
-          </div>
-          <div class="type-row">
-            <span class="type-meta">H3 · 31px</span>
-            <span style="font-family:var(--font-display);font-size:var(--text-2xl);font-weight:600;">Precision meets flow</span>
-          </div>
-          <div class="type-row">
-            <span class="type-meta">Body · 16px</span>
-            <span style="font-size:var(--text-base);color:var(--color-text-secondary);max-width:560px;">Glass panels breathe with the content behind them. Chrome accents catch light at the edges. Organic shapes drift slowly, reminding us that technology is an extension of nature.</span>
-          </div>
-          <div class="type-row" style="border:none;">
-            <span class="type-meta">Label · 11px</span>
-            <span style="font-size:var(--text-xs);font-weight:600;letter-spacing:var(--tracking-wider);text-transform:uppercase;color:var(--color-organic-primary);">Technology that breathes</span>
-          </div>
-        </div>
+  <section class="chapter" style="padding-top:0;">
+    <div class="wrap">
+      <p class="eyebrow">04 / Tokens</p>
+      <table class="token-table">
+        <thead>
+          <tr><th>Name</th><th>Value</th><th>From</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="chip" style="background:#070809"></span>ink</td><td>#070809</td><td>tokens.css</td></tr>
+          <tr><td><span class="chip" style="background:#f5f5f3"></span>paper</td><td>#F5F5F3</td><td>tokens.css</td></tr>
+          <tr><td><span class="chip" style="background:#fafaf8"></span>porcelain</td><td>#FAFAF8</td><td>invert chapters</td></tr>
+          <tr><td><span class="chip" style="background:#d5d8de"></span>chrome</td><td>#D5D8DE</td><td>tokens.css</td></tr>
+          <tr><td><span class="chip" style="background:#9a68ff"></span>entertainment</td><td>#9A68FF</td><td>avatar ring</td></tr>
+          <tr><td><span class="chip" style="background:#2f6bff"></span>promotions</td><td>#2F6BFF</td><td>avatar ring</td></tr>
+          <tr><td>glass dark</td><td>rgba(12,13,16,.42) · blur 22</td><td>liq-nav</td></tr>
+          <tr><td>glass light</td><td>rgba(250,250,249,.55) · blur 16</td><td>avatar caption</td></tr>
+          <tr><td>ease</td><td>cubic-bezier(.22,1,.36,1)</td><td>tokens.css</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="wrap site-footer__inner">
+      <div>
+        <strong>STONEHAVEN</strong>
+        <p class="mono-note">Entertainment AND Promotions</p>
       </div>
-    </section>
-
-    <!-- Spacing -->
-    <section>
-      <p class="section-label">Spacing Scale — 4px base</p>
-      <div class="glass-panel" style="padding:var(--space-6);">
-        <div style="display:flex;align-items:flex-end;gap:var(--space-4);flex-wrap:wrap;">
-          <div style="text-align:center;"><div style="width:4px;height:4px;background:var(--color-organic-primary);border-radius:2px;margin:0 auto var(--space-2);"></div><span style="font-size:10px;color:var(--color-text-tertiary);font-family:var(--font-mono);">4</span></div>
-          <div style="text-align:center;"><div style="width:8px;height:8px;background:var(--color-organic-primary);border-radius:2px;margin:0 auto var(--space-2);"></div><span style="font-size:10px;color:var(--color-text-tertiary);font-family:var(--font-mono);">8</span></div>
-          <div style="text-align:center;"><div style="width:16px;height:16px;background:var(--color-organic-primary);border-radius:2px;margin:0 auto var(--space-2);"></div><span style="font-size:10px;color:var(--color-text-tertiary);font-family:var(--font-mono);">16</span></div>
-          <div style="text-align:center;"><div style="width:24px;height:24px;background:var(--color-organic-primary);border-radius:2px;margin:0 auto var(--space-2);"></div><span style="font-size:10px;color:var(--color-text-tertiary);font-family:var(--font-mono);">24</span></div>
-          <div style="text-align:center;"><div style="width:32px;height:32px;background:var(--color-organic-primary);border-radius:2px;margin:0 auto var(--space-2);"></div><span style="font-size:10px;color:var(--color-text-tertiary);font-family:var(--font-mono);">32</span></div>
-          <div style="text-align:center;"><div style="width:48px;height:48px;background:var(--color-organic-primary);border-radius:2px;margin:0 auto var(--space-2);"></div><span style="font-size:10px;color:var(--color-text-tertiary);font-family:var(--font-mono);">48</span></div>
-          <div style="text-align:center;"><div style="width:64px;height:64px;background:var(--color-organic-primary);border-radius:2px;margin:0 auto var(--space-2);"></div><span style="font-size:10px;color:var(--color-text-tertiary);font-family:var(--font-mono);">64</span></div>
-          <div style="text-align:center;"><div style="width:96px;height:96px;background:var(--color-organic-primary);border-radius:2px;margin:0 auto var(--space-2);"></div><span style="font-size:10px;color:var(--color-text-tertiary);font-family:var(--font-mono);">96</span></div>
-        </div>
-      </div>
-    </section>
-
-    <footer style="text-align:center;padding-top:var(--space-12);color:var(--color-text-tertiary);font-size:var(--text-sm);">
-      Verdant Chrome Design System v1.0 · design-tokens.css · design-tokens.json · COMPONENTS.md
-    </footer>
-  </div>
-
-  <script>
-    const palettes = [
-      {
-        id: 'arctic',
-        name: 'Arctic Bloom',
-        mood: 'Cool, premium, calm',
-        base: '#0A0E17',
-        glass: '#E8F4FC',
-        chrome: ['#C0C8D4', '#E8ECF0'],
-        organic: '#2DD4BF',
-        highlight: '#A78BFA'
-      },
-      {
-        id: 'verdant',
-        name: 'Verdant Chrome',
-        mood: 'Earthy futurism',
-        base: '#0D1410',
-        glass: '#D4E8D4',
-        chrome: ['#9CA89C', '#D4DCD4'],
-        organic: '#4ADE80',
-        highlight: '#FBBF24',
-        active: true
-      },
-      {
-        id: 'ember',
-        name: 'Ember Glass',
-        mood: 'Warm, bold, human',
-        base: '#141010',
-        glass: '#FCE8E0',
-        chrome: ['#C9A89A', '#E8D4C8'],
-        organic: '#F97316',
-        highlight: '#F472B6'
-      },
-      {
-        id: 'lunar',
-        name: 'Lunar Chrome',
-        mood: 'Monochrome, editorial',
-        base: '#050505',
-        glass: '#FFFFFF',
-        chrome: ['#888888', '#FFFFFF'],
-        organic: '#6366F1',
-        highlight: '#94A3B8'
-      },
-      {
-        id: 'ocean',
-        name: 'Deep Ocean',
-        mood: 'Mysterious, immersive',
-        base: '#060B14',
-        glass: '#C8E8F0',
-        chrome: ['#8BA4B8', '#C8D8E8'],
-        organic: '#22D3EE',
-        highlight: '#E879A0'
-      }
-    ];
-
-    const tokens = [
-      { name: 'Void', hex: '#0D1410' },
-      { name: 'Surface', hex: '#162019' },
-      { name: 'Glass', hex: 'rgba(212,232,212,0.3)' },
-      { name: 'Chrome', hex: '#C8D4C8' },
-      { name: 'Organic', hex: '#4ADE80' },
-      { name: 'Amber', hex: '#FBBF24' },
-      { name: 'Text', hex: '#F0F4F0' },
-      { name: 'Glow', hex: 'rgba(74,222,128,0.4)' }
-    ];
-
-    function hexToRgba(hex, alpha) {
-      if (hex.startsWith('rgba')) return hex;
-      const r = parseInt(hex.slice(1,3), 16);
-      const g = parseInt(hex.slice(3,5), 16);
-      const b = parseInt(hex.slice(5,7), 16);
-      return `rgba(${r},${g},${b},${alpha})`;
-    }
-
-    function renderPalettes() {
-      const grid = document.getElementById('paletteGrid');
-      grid.innerHTML = palettes.map(p => `
-        <div class="palette-card ${p.active ? 'active' : ''}" data-id="${p.id}">
-          <div class="palette-swatch" style="background: linear-gradient(160deg, ${p.base} 0%, ${hexToRgba(p.organic, 0.15)} 100%);">
-            <div style="width:60px;height:40px;border-radius:12px;background:${hexToRgba(p.glass, 0.15)};backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.15);"></div>
-          </div>
-          <div class="palette-info">
-            <h3>${p.name}</h3>
-            <p>${p.mood}</p>
-            <div class="palette-dots">
-              <span style="background:${p.base}"></span>
-              <span style="background:${p.organic}"></span>
-              <span style="background:linear-gradient(135deg,${p.chrome[0]},${p.chrome[1]})"></span>
-              <span style="background:${p.highlight}"></span>
-            </div>
-          </div>
-        </div>
-      `).join('');
-
-      grid.querySelectorAll('.palette-card').forEach(card => {
-        card.addEventListener('click', () => {
-          grid.querySelectorAll('.palette-card').forEach(c => c.classList.remove('active'));
-          card.classList.add('active');
-          const p = palettes.find(x => x.id === card.dataset.id);
-          if (p) applyPalette(p);
-        });
-      });
-    }
-
-    function applyPalette(p) {
-      const root = document.documentElement;
-      root.style.setProperty('--color-base-void', p.base);
-      root.style.setProperty('--color-organic-primary', p.organic);
-      root.style.setProperty('--color-chrome-start', p.chrome[0]);
-      root.style.setProperty('--color-chrome-end', p.chrome[1]);
-      root.style.setProperty('--color-accent-amber', p.highlight);
-      root.style.setProperty('--gradient-chrome', `linear-gradient(135deg, ${p.chrome[0]} 0%, ${p.chrome[1]} 50%, #fff 100%)`);
-      root.style.setProperty('--gradient-organic-blob',
-        `radial-gradient(ellipse 80% 60% at 30% 40%, ${hexToRgba(p.organic, 0.18)} 0%, transparent 70%), radial-gradient(ellipse 60% 80% at 70% 60%, ${hexToRgba(p.highlight, 0.08)} 0%, transparent 60%)`);
-      document.querySelector('.blob-1').style.background =
-        `radial-gradient(circle, ${hexToRgba(p.organic, 0.15)} 0%, transparent 70%)`;
-      document.querySelector('.blob-2').style.background =
-        `radial-gradient(circle, ${hexToRgba(p.highlight, 0.08)} 0%, transparent 70%)`;
-    }
-
-    function renderTokens() {
-      document.getElementById('tokenSwatches').innerHTML = tokens.map(t => `
-        <div class="token-swatch" style="background:${t.hex};">${t.name}</div>
-      `).join('');
-    }
-
-    renderPalettes();
-    renderTokens();
-  </script>
+      <p class="mono-note">IDEAS THAT MOVE PEOPLE</p>
+    </div>
+  </footer>
 </body>
 </html>
