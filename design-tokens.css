@@ -1,0 +1,241 @@
+/**
+ * Verdant Chrome — Design Token System
+ * Chrome × Organic × Liquid Glass
+ * Import: @import url('./design-tokens.css');
+ */
+
+:root {
+  /* ─── Color: Base ─────────────────────────────────────────── */
+  --color-base-void: #0D1410;
+  --color-base-deep: #111A14;
+  --color-base-surface: #162019;
+  --color-base-elevated: #1C2A22;
+  --color-base-overlay: rgba(13, 20, 16, 0.72);
+
+  /* ─── Color: Glass ────────────────────────────────────────── */
+  --color-glass-fill: rgba(212, 232, 212, 0.08);
+  --color-glass-fill-hover: rgba(212, 232, 212, 0.12);
+  --color-glass-fill-active: rgba(212, 232, 212, 0.16);
+  --color-glass-border: rgba(255, 255, 255, 0.14);
+  --color-glass-border-strong: rgba(255, 255, 255, 0.22);
+  --color-glass-highlight: rgba(255, 255, 255, 0.24);
+  --color-glass-shadow: rgba(0, 0, 0, 0.32);
+  --color-glass-tint: #D4E8D4;
+
+  /* ─── Color: Chrome ───────────────────────────────────────── */
+  --color-chrome-start: #9CA89C;
+  --color-chrome-mid: #C8D4C8;
+  --color-chrome-end: #D4DCD4;
+  --color-chrome-shine: #EEF2EE;
+  --color-chrome-shadow: #6B756B;
+
+  /* ─── Color: Organic ──────────────────────────────────────── */
+  --color-organic-primary: #4ADE80;
+  --color-organic-primary-muted: rgba(74, 222, 128, 0.24);
+  --color-organic-secondary: #22C55E;
+  --color-organic-glow: rgba(74, 222, 128, 0.4);
+
+  /* ─── Color: Accent & Highlight ───────────────────────────── */
+  --color-accent-amber: #FBBF24;
+  --color-accent-amber-muted: rgba(251, 191, 36, 0.2);
+  --color-accent-coral: #F97316;
+
+  /* ─── Color: Text ─────────────────────────────────────────── */
+  --color-text-primary: #F0F4F0;
+  --color-text-secondary: rgba(240, 244, 240, 0.72);
+  --color-text-tertiary: rgba(240, 244, 240, 0.48);
+  --color-text-inverse: #0D1410;
+  --color-text-chrome: linear-gradient(135deg, var(--color-chrome-shine) 0%, var(--color-chrome-mid) 50%, var(--color-chrome-start) 100%);
+
+  /* ─── Color: Semantic ─────────────────────────────────────── */
+  --color-success: #4ADE80;
+  --color-warning: #FBBF24;
+  --color-error: #F87171;
+  --color-info: #38BDF8;
+
+  /* ─── Gradients ───────────────────────────────────────────── */
+  --gradient-chrome: linear-gradient(135deg, var(--color-chrome-start) 0%, var(--color-chrome-mid) 45%, var(--color-chrome-end) 70%, var(--color-chrome-shine) 100%);
+  --gradient-chrome-border: linear-gradient(180deg, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0.08) 50%, rgba(0,0,0,0.12) 100%);
+  --gradient-organic-blob: radial-gradient(ellipse 80% 60% at 30% 40%, rgba(74,222,128,0.18) 0%, transparent 70%),
+                           radial-gradient(ellipse 60% 80% at 70% 60%, rgba(251,191,36,0.08) 0%, transparent 60%);
+  --gradient-hero-bg: radial-gradient(ellipse 120% 80% at 50% -20%, rgba(74,222,128,0.12) 0%, transparent 50%),
+                      linear-gradient(180deg, var(--color-base-void) 0%, var(--color-base-deep) 100%);
+
+  /* ─── Typography: Families ────────────────────────────────── */
+  --font-display: 'Syne', 'Clash Display', system-ui, sans-serif;
+  --font-body: 'DM Sans', 'Outfit', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* ─── Typography: Scale (1.25 ratio) ──────────────────────── */
+  --text-xs: 0.64rem;    /* 10.24px */
+  --text-sm: 0.8rem;     /* 12.8px */
+  --text-base: 1rem;     /* 16px */
+  --text-md: 1.125rem;   /* 18px */
+  --text-lg: 1.25rem;    /* 20px */
+  --text-xl: 1.563rem;   /* 25px */
+  --text-2xl: 1.953rem;  /* 31.25px */
+  --text-3xl: 2.441rem;  /* 39px */
+  --text-4xl: 3.052rem;  /* 48.8px */
+  --text-5xl: 3.815rem;  /* 61px */
+  --text-6xl: 4.768rem;  /* 76.3px */
+
+  /* ─── Typography: Weights ─────────────────────────────────── */
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  /* ─── Typography: Line Heights ────────────────────────────── */
+  --leading-tight: 1.15;
+  --leading-snug: 1.35;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.65;
+
+  /* ─── Typography: Letter Spacing ──────────────────────────── */
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.04em;
+  --tracking-wider: 0.08em;
+
+  /* ─── Spacing (4px base) ────────────────────────────────────── */
+  --space-0: 0;
+  --space-1: 0.25rem;   /* 4px */
+  --space-2: 0.5rem;    /* 8px */
+  --space-3: 0.75rem;   /* 12px */
+  --space-4: 1rem;      /* 16px */
+  --space-5: 1.25rem;   /* 20px */
+  --space-6: 1.5rem;    /* 24px */
+  --space-8: 2rem;      /* 32px */
+  --space-10: 2.5rem;   /* 40px */
+  --space-12: 3rem;     /* 48px */
+  --space-16: 4rem;     /* 64px */
+  --space-20: 5rem;     /* 80px */
+  --space-24: 6rem;     /* 96px */
+  --space-32: 8rem;     /* 128px */
+
+  /* ─── Border Radius ─────────────────────────────────────────── */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-2xl: 40px;
+  --radius-blob: 60% 40% 55% 45% / 45% 55% 40% 60%;
+  --radius-full: 9999px;
+
+  /* ─── Glass Effects ─────────────────────────────────────────── */
+  --blur-glass-sm: 16px;
+  --blur-glass-md: 32px;
+  --blur-glass-lg: 48px;
+  --glass-specular: inset 0 1px 0 var(--color-glass-highlight);
+  --glass-depth: 0 8px 32px var(--color-glass-shadow);
+  --glass-depth-lg: 0 16px 64px rgba(0, 0, 0, 0.4);
+
+  /* ─── Shadows ───────────────────────────────────────────────── */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.16);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.24);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.32);
+  --shadow-glow-organic: 0 0 40px var(--color-organic-glow);
+  --shadow-glow-amber: 0 0 32px var(--color-accent-amber-muted);
+
+  /* ─── Motion ────────────────────────────────────────────────── */
+  --ease-liquid: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-drift: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --duration-instant: 100ms;
+  --duration-fast: 200ms;
+  --duration-normal: 300ms;
+  --duration-slow: 500ms;
+  --duration-drift: 8000ms;
+
+  /* ─── Layout ──────────────────────────────────────────────────── */
+  --container-sm: 640px;
+  --container-md: 768px;
+  --container-lg: 1024px;
+  --container-xl: 1280px;
+  --container-2xl: 1440px;
+  --grid-columns: 12;
+  --grid-gap: var(--space-6);
+
+  /* ─── Z-Index ─────────────────────────────────────────────────── */
+  --z-base: 0;
+  --z-blob: 1;
+  --z-glass: 10;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-modal: 300;
+  --z-toast: 400;
+
+  /* ─── Component Tokens ────────────────────────────────────────── */
+  --button-height-sm: 36px;
+  --button-height-md: 44px;
+  --button-height-lg: 52px;
+  --input-height: 48px;
+  --nav-height: 72px;
+  --card-padding: var(--space-6);
+  --section-padding-y: var(--space-24);
+}
+
+/* ─── Utility Classes ─────────────────────────────────────────── */
+
+.glass-panel {
+  background: var(--color-glass-fill);
+  backdrop-filter: blur(var(--blur-glass-md));
+  -webkit-backdrop-filter: blur(var(--blur-glass-md));
+  border: 1px solid var(--color-glass-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--glass-specular), var(--glass-depth);
+  transition: background var(--duration-normal) var(--ease-smooth),
+              border-color var(--duration-normal) var(--ease-smooth),
+              transform var(--duration-normal) var(--ease-liquid);
+}
+
+.glass-panel:hover {
+  background: var(--color-glass-fill-hover);
+  border-color: var(--color-glass-border-strong);
+}
+
+.glass-panel--elevated {
+  backdrop-filter: blur(var(--blur-glass-lg));
+  -webkit-backdrop-filter: blur(var(--blur-glass-lg));
+  box-shadow: var(--glass-specular), var(--glass-depth-lg);
+}
+
+.chrome-text {
+  background: var(--gradient-chrome);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.chrome-border {
+  position: relative;
+  border: none;
+}
+
+.chrome-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--gradient-chrome-border);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.text-display {
+  font-family: var(--font-display);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-tight);
+}
+
+.text-body {
+  font-family: var(--font-body);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-normal);
+  color: var(--color-text-secondary);
+}

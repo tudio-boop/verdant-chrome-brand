@@ -1,0 +1,148 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "meta": {
+    "name": "Verdant Chrome",
+    "version": "1.0.0",
+    "description": "Chrome × Organic × Liquid Glass design system",
+    "tagline": "Technology that breathes."
+  },
+  "color": {
+    "base": {
+      "void": { "value": "#0D1410", "type": "color" },
+      "deep": { "value": "#111A14", "type": "color" },
+      "surface": { "value": "#162019", "type": "color" },
+      "elevated": { "value": "#1C2A22", "type": "color" }
+    },
+    "glass": {
+      "fill": { "value": "rgba(212, 232, 212, 0.08)", "type": "color" },
+      "fillHover": { "value": "rgba(212, 232, 212, 0.12)", "type": "color" },
+      "border": { "value": "rgba(255, 255, 255, 0.14)", "type": "color" },
+      "highlight": { "value": "rgba(255, 255, 255, 0.24)", "type": "color" },
+      "tint": { "value": "#D4E8D4", "type": "color" }
+    },
+    "chrome": {
+      "start": { "value": "#9CA89C", "type": "color" },
+      "mid": { "value": "#C8D4C8", "type": "color" },
+      "end": { "value": "#D4DCD4", "type": "color" },
+      "shine": { "value": "#EEF2EE", "type": "color" }
+    },
+    "organic": {
+      "primary": { "value": "#4ADE80", "type": "color" },
+      "secondary": { "value": "#22C55E", "type": "color" },
+      "glow": { "value": "rgba(74, 222, 128, 0.4)", "type": "color" }
+    },
+    "accent": {
+      "amber": { "value": "#FBBF24", "type": "color" },
+      "coral": { "value": "#F97316", "type": "color" }
+    },
+    "text": {
+      "primary": { "value": "#F0F4F0", "type": "color" },
+      "secondary": { "value": "rgba(240, 244, 240, 0.72)", "type": "color" },
+      "tertiary": { "value": "rgba(240, 244, 240, 0.48)", "type": "color" }
+    },
+    "semantic": {
+      "success": { "value": "#4ADE80", "type": "color" },
+      "warning": { "value": "#FBBF24", "type": "color" },
+      "error": { "value": "#F87171", "type": "color" },
+      "info": { "value": "#38BDF8", "type": "color" }
+    }
+  },
+  "palettes": {
+    "arcticBloom": {
+      "base": "#0A0E17",
+      "glassTint": "#E8F4FC",
+      "chrome": ["#C0C8D4", "#E8ECF0"],
+      "organic": "#2DD4BF",
+      "highlight": "#A78BFA"
+    },
+    "verdantChrome": {
+      "base": "#0D1410",
+      "glassTint": "#D4E8D4",
+      "chrome": ["#9CA89C", "#D4DCD4"],
+      "organic": "#4ADE80",
+      "highlight": "#FBBF24"
+    },
+    "emberGlass": {
+      "base": "#141010",
+      "glassTint": "#FCE8E0",
+      "chrome": ["#C9A89A", "#E8D4C8"],
+      "organic": "#F97316",
+      "highlight": "#F472B6"
+    },
+    "lunarChrome": {
+      "base": "#050505",
+      "glassTint": "#FFFFFF",
+      "chrome": ["#888888", "#FFFFFF"],
+      "organic": "#6366F1",
+      "highlight": "#94A3B8"
+    },
+    "deepOcean": {
+      "base": "#060B14",
+      "glassTint": "#C8E8F0",
+      "chrome": ["#8BA4B8", "#C8D8E8"],
+      "organic": "#22D3EE",
+      "highlight": "#E879A0"
+    }
+  },
+  "typography": {
+    "fontFamily": {
+      "display": { "value": "Syne, Clash Display, system-ui, sans-serif", "type": "fontFamily" },
+      "body": { "value": "DM Sans, Outfit, system-ui, sans-serif", "type": "fontFamily" },
+      "mono": { "value": "JetBrains Mono, Fira Code, monospace", "type": "fontFamily" }
+    },
+    "fontSize": {
+      "xs": { "value": "0.64rem", "type": "dimension" },
+      "sm": { "value": "0.8rem", "type": "dimension" },
+      "base": { "value": "1rem", "type": "dimension" },
+      "lg": { "value": "1.25rem", "type": "dimension" },
+      "xl": { "value": "1.563rem", "type": "dimension" },
+      "2xl": { "value": "1.953rem", "type": "dimension" },
+      "3xl": { "value": "2.441rem", "type": "dimension" },
+      "4xl": { "value": "3.052rem", "type": "dimension" },
+      "5xl": { "value": "3.815rem", "type": "dimension" }
+    },
+    "fontWeight": {
+      "regular": { "value": 400, "type": "number" },
+      "medium": { "value": 500, "type": "number" },
+      "semibold": { "value": 600, "type": "number" },
+      "bold": { "value": 700, "type": "number" }
+    },
+    "lineHeight": {
+      "tight": { "value": 1.15, "type": "number" },
+      "snug": { "value": 1.35, "type": "number" },
+      "normal": { "value": 1.5, "type": "number" },
+      "relaxed": { "value": 1.65, "type": "number" }
+    }
+  },
+  "spacing": {
+    "1": { "value": "0.25rem", "type": "dimension" },
+    "2": { "value": "0.5rem", "type": "dimension" },
+    "3": { "value": "0.75rem", "type": "dimension" },
+    "4": { "value": "1rem", "type": "dimension" },
+    "6": { "value": "1.5rem", "type": "dimension" },
+    "8": { "value": "2rem", "type": "dimension" },
+    "12": { "value": "3rem", "type": "dimension" },
+    "16": { "value": "4rem", "type": "dimension" },
+    "24": { "value": "6rem", "type": "dimension" }
+  },
+  "radius": {
+    "sm": { "value": "6px", "type": "dimension" },
+    "md": { "value": "12px", "type": "dimension" },
+    "lg": { "value": "20px", "type": "dimension" },
+    "xl": { "value": "28px", "type": "dimension" },
+    "2xl": { "value": "40px", "type": "dimension" },
+    "full": { "value": "9999px", "type": "dimension" }
+  },
+  "effect": {
+    "blurGlassSm": { "value": "16px", "type": "dimension" },
+    "blurGlassMd": { "value": "32px", "type": "dimension" },
+    "blurGlassLg": { "value": "48px", "type": "dimension" }
+  },
+  "motion": {
+    "easeLiquid": { "value": "cubic-bezier(0.34, 1.56, 0.64, 1)", "type": "cubicBezier" },
+    "easeSmooth": { "value": "cubic-bezier(0.4, 0, 0.2, 1)", "type": "cubicBezier" },
+    "durationFast": { "value": "200ms", "type": "duration" },
+    "durationNormal": { "value": "300ms", "type": "duration" },
+    "durationSlow": { "value": "500ms", "type": "duration" }
+  }
+}
