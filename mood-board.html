@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brand Mood Board — Chrome × Organic × Liquid Glass</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="design-tokens.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--color-base-void);
+      color: var(--color-text-primary);
+      line-height: var(--leading-normal);
+      overflow-x: hidden;
+    }
+
+    /* ─── Ambient blobs ─── */
+    .ambient {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: var(--z-blob);
+      overflow: hidden;
+    }
+    .blob {
+      position: absolute;
+      border-radius: var(--radius-blob);
+      filter: blur(80px);
+      animation: drift var(--duration-drift) var(--ease-drift) infinite alternate;
+    }
+    .blob-1 {
+      width: 600px; height: 500px;
+      top: -10%; left: -5%;
+      background: radial-gradient(circle, rgba(74,222,128,0.15) 0%, transparent 70%);
+    }
+    .blob-2 {
+      width: 450px; height: 400px;
+      bottom: 10%; right: -8%;
+      background: radial-gradient(circle, rgba(251,191,36,0.08) 0%, transparent 70%);
+      animation-delay: -4s;
+    }
+    @keyframes drift {
+      0% { transform: translate(0, 0) scale(1); border-radius: 60% 40% 55% 45% / 45% 55% 40% 60%; }
+      100% { transform: translate(30px, -20px) scale(1.05); border-radius: 45% 55% 40% 60% / 60% 40% 55% 45%; }
+    }
+
+    /* ─── Layout ─── */
+    .board {
+      position: relative;
+      z-index: var(--z-glass);
+      max-width: var(--container-2xl);
+      margin: 0 auto;
+      padding: var(--space-8) var(--space-6) var(--space-32);
+    }
+
+    .board-header {
+      text-align: center;
+      padding: var(--space-16) 0 var(--space-12);
+    }
+    .board-header .eyebrow {
+      font-size: var(--text-sm);
+      font-weight: var(--weight-semibold);
+      letter-spacing: var(--tracking-wider);
+      text-transform: uppercase;
+      color: var(--color-organic-primary);
+      margin-bottom: var(--space-4);
+    }
+    .board-header h1 {
+      font-family: var(--font-display);
+      font-size: clamp(var(--text-3xl), 5vw, var(--text-5xl));
+      font-weight: var(--weight-bold);
+      line-height: var(--leading-tight);
+      letter-spacing: var(--tracking-tight);
+      margin-bottom: var(--space-4);
+    }
+    .board-header .tagline {
+      font-size: var(--text-lg);
+      color: var(--color-text-secondary);
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: var(--text-xs);
+      font-weight: var(--weight-semibold);
+      letter-spacing: var(--tracking-wider);
+      text-transform: uppercase;
+      color: var(--color-text-tertiary);
+      margin-bottom: var(--space-4);
+    }
+
+    section { margin-bottom: var(--space-16); }
+
+    /* ─── Palette grid ─── */
+    .palette-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: var(--space-4);
+    }
+    .palette-card {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform var(--duration-normal) var(--ease-liquid),
+                  box-shadow var(--duration-normal) var(--ease-smooth);
+      border: 2px solid transparent;
+    }
+    .palette-card:hover { transform: translateY(-4px); }
+    .palette-card.active {
+      border-color: var(--color-organic-primary);
+      box-shadow: var(--shadow-glow-organic);
+    }
+    .palette-swatch {
+      height: 120px;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      padding: var(--space-3);
+    }
+    .palette-info {
+      padding: var(--space-4);
+      background: var(--color-base-surface);
+    }
+    .palette-info h3 {
+      font-family: var(--font-display);
+      font-size: var(--text-md);
+      font-weight: var(--weight-semibold);
+      margin-bottom: var(--space-1);
+    }
+    .palette-info p {
+      font-size: var(--text-sm);
+      color: var(--color-text-tertiary);
+    }
+    .palette-dots {
+      display: flex;
+      gap: 6px;
+      margin-top: var(--space-3);
+    }
+    .palette-dots span {
+      width: 20px; height: 20px;
+      border-radius: var(--radius-full);
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+
+    /* ─── Featured system ─── */
+    .featured-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-6);
+    }
+    @media (max-width: 768px) {
+      .featured-grid { grid-template-columns: 1fr; }
+    }
+
+    .token-swatch-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-2);
+    }
+    .token-swatch {
+      aspect-ratio: 1;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: flex-end;
+      padding: var(--space-2);
+      font-size: 10px;
+      font-weight: var(--weight-medium);
+      color: rgba(255,255,255,0.8);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    /* ─── Component showcase ─── */
+    .component-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-4);
+      align-items: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-body);
+      font-weight: var(--weight-semibold);
+      font-size: 15px;
+      height: var(--button-height-md);
+      padding: 0 var(--space-6);
+      border-radius: var(--radius-full);
+      border: none;
+      cursor: pointer;
+      transition: transform var(--duration-normal) var(--ease-liquid),
+                  box-shadow var(--duration-normal) var(--ease-smooth),
+                  background var(--duration-normal) var(--ease-smooth);
+    }
+    .btn:active { transform: scale(0.98); }
+
+    .btn-primary {
+      background: var(--color-organic-primary);
+      color: var(--color-text-inverse);
+      box-shadow: var(--shadow-glow-organic);
+    }
+    .btn-primary:hover { transform: scale(1.02); }
+
+    .btn-glass {
+      background: var(--color-glass-fill);
+      color: var(--color-text-primary);
+      border: 1px solid var(--color-glass-border);
+      backdrop-filter: blur(var(--blur-glass-md));
+    }
+    .btn-glass:hover { background: var(--color-glass-fill-hover); transform: scale(1.02); }
+
+    .btn-chrome {
+      background: var(--gradient-chrome);
+      color: var(--color-text-inverse);
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-chrome::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.4) 50%, transparent 60%);
+      transform: translateX(-100%);
+      transition: transform 500ms var(--ease-smooth);
+    }
+    .btn-chrome:hover::after { transform: translateX(100%); }
+    .btn-chrome:hover { transform: scale(1.02); }
+
+    .demo-card {
+      padding: var(--space-6);
+      max-width: 360px;
+    }
+    .demo-card h4 {
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+      font-weight: var(--weight-semibold);
+      margin-bottom: var(--space-2);
+    }
+    .demo-card p {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      margin-bottom: var(--space-4);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      height: 28px;
+      padding: 0 var(--space-3);
+      border-radius: var(--radius-full);
+      font-size: var(--text-xs);
+      font-weight: var(--weight-semibold);
+      letter-spacing: var(--tracking-wide);
+    }
+    .badge-organic {
+      background: var(--color-organic-primary-muted);
+      color: var(--color-organic-primary);
+    }
+    .badge-chrome {
+      background: var(--gradient-chrome);
+      color: var(--color-text-inverse);
+    }
+    .badge-glass {
+      background: var(--color-glass-fill);
+      color: var(--color-text-secondary);
+      border: 1px solid var(--color-glass-border);
+    }
+
+    /* ─── Typography showcase ─── */
+    .type-scale { display: flex; flex-direction: column; gap: var(--space-6); }
+    .type-row {
+      display: flex;
+      align-items: baseline;
+      gap: var(--space-6);
+      padding-bottom: var(--space-4);
+      border-bottom: 1px solid var(--color-glass-border);
+    }
+    .type-meta {
+      flex-shrink: 0;
+      width: 100px;
+      font-size: var(--text-xs);
+      color: var(--color-text-tertiary);
+      font-family: var(--font-mono);
+    }
+
+    /* ─── Material samples ─── */
+    .materials {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-4);
+    }
+    @media (max-width: 768px) {
+      .materials { grid-template-columns: 1fr; }
+    }
+    .material {
+      height: 200px;
+      border-radius: var(--radius-xl);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: var(--space-4);
+      position: relative;
+      overflow: hidden;
+    }
+    .material-label {
+      font-family: var(--font-display);
+      font-weight: var(--weight-semibold);
+      font-size: var(--text-md);
+      position: relative;
+      z-index: 1;
+    }
+    .material-desc {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      position: relative;
+      z-index: 1;
+    }
+
+    .mat-glass {
+      background: var(--color-glass-fill);
+      backdrop-filter: blur(var(--blur-glass-lg));
+      border: 1px solid var(--color-glass-border);
+      box-shadow: var(--glass-specular), var(--glass-depth);
+    }
+    .mat-chrome {
+      background: var(--gradient-chrome);
+    }
+    .mat-chrome .material-label,
+    .mat-chrome .material-desc { color: var(--color-text-inverse); }
+    .mat-organic {
+      background: var(--color-base-deep);
+      border: 1px solid rgba(74,222,128,0.2);
+    }
+    .mat-organic::before {
+      content: '';
+      position: absolute;
+      inset: -50%;
+      background: var(--gradient-organic-blob);
+      animation: drift var(--duration-drift) var(--ease-drift) infinite alternate;
+    }
+
+    /* ─── Input demo ─── */
+    .demo-input {
+      width: 100%;
+      max-width: 320px;
+      height: var(--input-height);
+      background: rgba(212,232,212,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: var(--radius-md);
+      padding: 0 var(--space-4);
+      font-family: var(--font-body);
+      font-size: var(--text-base);
+      color: var(--color-text-primary);
+      outline: none;
+      transition: border-color var(--duration-fast), box-shadow var(--duration-fast);
+    }
+    .demo-input::placeholder { color: var(--color-text-tertiary); }
+    .demo-input:focus {
+      border-color: rgba(74,222,128,0.6);
+      box-shadow: 0 0 0 3px rgba(74,222,128,0.15);
+    }
+
+    .refraction-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(74,222,128,0.4), transparent);
+      margin: var(--space-8) 0;
+    }
+
+    /* ─── Principles strip ─── */
+    .principles {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-4);
+    }
+    @media (max-width: 768px) {
+      .principles { grid-template-columns: 1fr; }
+    }
+    .principle {
+      padding: var(--space-6);
+      text-align: center;
+    }
+    .principle-icon {
+      width: 48px; height: 48px;
+      margin: 0 auto var(--space-4);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+    .principle h4 {
+      font-family: var(--font-display);
+      font-size: var(--text-md);
+      margin-bottom: var(--space-2);
+    }
+    .principle p {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .blob, .mat-organic::before { animation: none; }
+      .btn-chrome::after { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="ambient" aria-hidden="true">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+  </div>
+
+  <div class="board">
+    <header class="board-header">
+      <p class="eyebrow">Brand Design Language</p>
+      <h1><span class="chrome-text">Chrome</span> × Organic × Liquid Glass</h1>
+      <p class="tagline">Technology that breathes. Precision refracted through living form.</p>
+    </header>
+
+    <!-- Color Ways -->
+    <section>
+      <p class="section-label">Color Ways — click to preview</p>
+      <div class="palette-grid" id="paletteGrid"></div>
+    </section>
+
+    <div class="refraction-divider"></div>
+
+    <!-- Principles -->
+    <section>
+      <p class="section-label">Core Principles</p>
+      <div class="principles">
+        <div class="glass-panel principle">
+          <div class="principle-icon mat-glass" style="width:48px;height:48px;border-radius:12px;">💧</div>
+          <h4>Liquid Glass</h4>
+          <p>Frosted translucency, specular highlights, depth through blur and inner glow.</p>
+        </div>
+        <div class="glass-panel principle">
+          <div class="principle-icon" style="background:var(--gradient-chrome);border-radius:12px;">⚙️</div>
+          <h4>Chrome Precision</h4>
+          <p>Mirror gradients on edges and accents. Metallic, not metallic everywhere.</p>
+        </div>
+        <div class="glass-panel principle">
+          <div class="principle-icon" style="background:rgba(74,222,128,0.15);border-radius:12px;">🌿</div>
+          <h4>Organic Flow</h4>
+          <p>Soft blobs, asymmetrical curves, natural motion. Life inside the machine.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Token System -->
+    <section>
+      <p class="section-label">Featured System — Verdant Chrome</p>
+      <div class="featured-grid">
+        <div class="glass-panel" style="padding: var(--space-6);">
+          <h3 style="font-family:var(--font-display);font-size:var(--text-lg);margin-bottom:var(--space-4);">Color Tokens</h3>
+          <div class="token-swatch-grid" id="tokenSwatches"></div>
+        </div>
+        <div class="glass-panel" style="padding: var(--space-6);">
+          <h3 style="font-family:var(--font-display);font-size:var(--text-lg);margin-bottom:var(--space-4);">Materials</h3>
+          <div class="materials">
+            <div class="material mat-glass">
+              <span class="material-label">Glass</span>
+              <span class="material-desc">Blur 48px · 8% fill</span>
+            </div>
+            <div class="material mat-chrome">
+              <span class="material-label">Chrome</span>
+              <span class="material-desc">Gradient accent</span>
+            </div>
+            <div class="material mat-organic">
+              <span class="material-label">Organic</span>
+              <span class="material-desc">Living glow</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Components -->
+    <section>
+      <p class="section-label">Components</p>
+      <div class="featured-grid">
+        <div class="glass-panel demo-card">
+          <span class="badge badge-organic">New</span>
+          <h4 style="margin-top:var(--space-3);">Glass Card</h4>
+          <p>Elevated surface with backdrop blur, specular inset highlight, and organic border glow on hover.</p>
+          <div class="component-row">
+            <button class="btn btn-primary">Primary</button>
+            <button class="btn btn-glass">Glass</button>
+            <button class="btn btn-chrome">Chrome</button>
+          </div>
+        </div>
+        <div class="glass-panel" style="padding:var(--space-6);">
+          <p style="font-size:var(--text-sm);color:var(--color-text-secondary);margin-bottom:var(--space-2);">Email address</p>
+          <input class="demo-input" type="email" placeholder="you@brand.com">
+          <div style="margin-top:var(--space-6);display:flex;gap:var(--space-2);flex-wrap:wrap;">
+            <span class="badge badge-organic">Organic</span>
+            <span class="badge badge-chrome">Chrome</span>
+            <span class="badge badge-glass">Glass</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Typography -->
+    <section>
+      <p class="section-label">Typography — Syne + DM Sans</p>
+      <div class="glass-panel" style="padding: var(--space-8);">
+        <div class="type-scale">
+          <div class="type-row">
+            <span class="type-meta">Display</span>
+            <span style="font-family:var(--font-display);font-size:var(--text-4xl);font-weight:700;letter-spacing:var(--tracking-tight);line-height:var(--leading-tight);">
+              <span class="chrome-text">Refraction</span>
+            </span>
+          </div>
+          <div class="type-row">
+            <span class="type-meta">H2 · 39px</span>
+            <span style="font-family:var(--font-display);font-size:var(--text-3xl);font-weight:600;">Living surfaces</span>
+          </div>
+          <div class="type-row">
+            <span class="type-meta">H3 · 31px</span>
+            <span style="font-family:var(--font-display);font-size:var(--text-2xl);font-weight:600;">Precision meets flow</span>
+          </div>
+          <div class="type-row">
+            <span class="type-meta">Body · 16px</span>
+            <span style="font-size:var(--text-base);color:var(--color-text-secondary);max-width:560px;">Glass panels breathe with the content behind them. Chrome accents catch light at the edges. Organic shapes drift slowly, reminding us that technology is an extension of nature.</span>
+          </div>
+          <div class="type-row" style="border:none;">
+            <span class="type-meta">Label · 11px</span>
+            <span style="font-size:var(--text-xs);font-weight:600;letter-spacing:var(--tracking-wider);text-transform:uppercase;color:var(--color-organic-primary);">Technology that breathes</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Spacing -->
+    <section>
+      <p class="section-label">Spacing Scale — 4px base</p>
+      <div class="glass-panel" style="padding:var(--space-6);">
+        <div style="display:flex;align-items:flex-end;gap:var(--space-4);flex-wrap:wrap;">
+          <div style="text-align:center;"><div style="width:4px;height:4px;background:var(--color-organic-primary);border-radius:2px;margin:0 auto var(--space-2);"></div><span style="font-size:10px;color:var(--color-text-tertiary);font-family:var(--font-mono);">4</span></div>
+          <div style="text-align:center;"><div style="width:8px;height:8px;background:var(--color-organic-primary);border-radius:2px;margin:0 auto var(--space-2);"></div><span style="font-size:10px;color:var(--color-text-tertiary);font-family:var(--font-mono);">8</span></div>
+          <div style="text-align:center;"><div style="width:16px;height:16px;background:var(--color-organic-primary);border-radius:2px;margin:0 auto var(--space-2);"></div><span style="font-size:10px;color:var(--color-text-tertiary);font-family:var(--font-mono);">16</span></div>
+          <div style="text-align:center;"><div style="width:24px;height:24px;background:var(--color-organic-primary);border-radius:2px;margin:0 auto var(--space-2);"></div><span style="font-size:10px;color:var(--color-text-tertiary);font-family:var(--font-mono);">24</span></div>
+          <div style="text-align:center;"><div style="width:32px;height:32px;background:var(--color-organic-primary);border-radius:2px;margin:0 auto var(--space-2);"></div><span style="font-size:10px;color:var(--color-text-tertiary);font-family:var(--font-mono);">32</span></div>
+          <div style="text-align:center;"><div style="width:48px;height:48px;background:var(--color-organic-primary);border-radius:2px;margin:0 auto var(--space-2);"></div><span style="font-size:10px;color:var(--color-text-tertiary);font-family:var(--font-mono);">48</span></div>
+          <div style="text-align:center;"><div style="width:64px;height:64px;background:var(--color-organic-primary);border-radius:2px;margin:0 auto var(--space-2);"></div><span style="font-size:10px;color:var(--color-text-tertiary);font-family:var(--font-mono);">64</span></div>
+          <div style="text-align:center;"><div style="width:96px;height:96px;background:var(--color-organic-primary);border-radius:2px;margin:0 auto var(--space-2);"></div><span style="font-size:10px;color:var(--color-text-tertiary);font-family:var(--font-mono);">96</span></div>
+        </div>
+      </div>
+    </section>
+
+    <footer style="text-align:center;padding-top:var(--space-12);color:var(--color-text-tertiary);font-size:var(--text-sm);">
+      Verdant Chrome Design System v1.0 · design-tokens.css · design-tokens.json · COMPONENTS.md
+    </footer>
+  </div>
+
+  <script>
+    const palettes = [
+      {
+        id: 'arctic',
+        name: 'Arctic Bloom',
+        mood: 'Cool, premium, calm',
+        base: '#0A0E17',
+        glass: '#E8F4FC',
+        chrome: ['#C0C8D4', '#E8ECF0'],
+        organic: '#2DD4BF',
+        highlight: '#A78BFA'
+      },
+      {
+        id: 'verdant',
+        name: 'Verdant Chrome',
+        mood: 'Earthy futurism',
+        base: '#0D1410',
+        glass: '#D4E8D4',
+        chrome: ['#9CA89C', '#D4DCD4'],
+        organic: '#4ADE80',
+        highlight: '#FBBF24',
+        active: true
+      },
+      {
+        id: 'ember',
+        name: 'Ember Glass',
+        mood: 'Warm, bold, human',
+        base: '#141010',
+        glass: '#FCE8E0',
+        chrome: ['#C9A89A', '#E8D4C8'],
+        organic: '#F97316',
+        highlight: '#F472B6'
+      },
+      {
+        id: 'lunar',
+        name: 'Lunar Chrome',
+        mood: 'Monochrome, editorial',
+        base: '#050505',
+        glass: '#FFFFFF',
+        chrome: ['#888888', '#FFFFFF'],
+        organic: '#6366F1',
+        highlight: '#94A3B8'
+      },
+      {
+        id: 'ocean',
+        name: 'Deep Ocean',
+        mood: 'Mysterious, immersive',
+        base: '#060B14',
+        glass: '#C8E8F0',
+        chrome: ['#8BA4B8', '#C8D8E8'],
+        organic: '#22D3EE',
+        highlight: '#E879A0'
+      }
+    ];
+
+    const tokens = [
+      { name: 'Void', hex: '#0D1410' },
+      { name: 'Surface', hex: '#162019' },
+      { name: 'Glass', hex: 'rgba(212,232,212,0.3)' },
+      { name: 'Chrome', hex: '#C8D4C8' },
+      { name: 'Organic', hex: '#4ADE80' },
+      { name: 'Amber', hex: '#FBBF24' },
+      { name: 'Text', hex: '#F0F4F0' },
+      { name: 'Glow', hex: 'rgba(74,222,128,0.4)' }
+    ];
+
+    function hexToRgba(hex, alpha) {
+      if (hex.startsWith('rgba')) return hex;
+      const r = parseInt(hex.slice(1,3), 16);
+      const g = parseInt(hex.slice(3,5), 16);
+      const b = parseInt(hex.slice(5,7), 16);
+      return `rgba(${r},${g},${b},${alpha})`;
+    }
+
+    function renderPalettes() {
+      const grid = document.getElementById('paletteGrid');
+      grid.innerHTML = palettes.map(p => `
+        <div class="palette-card ${p.active ? 'active' : ''}" data-id="${p.id}">
+          <div class="palette-swatch" style="background: linear-gradient(160deg, ${p.base} 0%, ${hexToRgba(p.organic, 0.15)} 100%);">
+            <div style="width:60px;height:40px;border-radius:12px;background:${hexToRgba(p.glass, 0.15)};backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.15);"></div>
+          </div>
+          <div class="palette-info">
+            <h3>${p.name}</h3>
+            <p>${p.mood}</p>
+            <div class="palette-dots">
+              <span style="background:${p.base}"></span>
+              <span style="background:${p.organic}"></span>
+              <span style="background:linear-gradient(135deg,${p.chrome[0]},${p.chrome[1]})"></span>
+              <span style="background:${p.highlight}"></span>
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+      grid.querySelectorAll('.palette-card').forEach(card => {
+        card.addEventListener('click', () => {
+          grid.querySelectorAll('.palette-card').forEach(c => c.classList.remove('active'));
+          card.classList.add('active');
+          const p = palettes.find(x => x.id === card.dataset.id);
+          if (p) applyPalette(p);
+        });
+      });
+    }
+
+    function applyPalette(p) {
+      const root = document.documentElement;
+      root.style.setProperty('--color-base-void', p.base);
+      root.style.setProperty('--color-organic-primary', p.organic);
+      root.style.setProperty('--color-chrome-start', p.chrome[0]);
+      root.style.setProperty('--color-chrome-end', p.chrome[1]);
+      root.style.setProperty('--color-accent-amber', p.highlight);
+      root.style.setProperty('--gradient-chrome', `linear-gradient(135deg, ${p.chrome[0]} 0%, ${p.chrome[1]} 50%, #fff 100%)`);
+      root.style.setProperty('--gradient-organic-blob',
+        `radial-gradient(ellipse 80% 60% at 30% 40%, ${hexToRgba(p.organic, 0.18)} 0%, transparent 70%), radial-gradient(ellipse 60% 80% at 70% 60%, ${hexToRgba(p.highlight, 0.08)} 0%, transparent 60%)`);
+      document.querySelector('.blob-1').style.background =
+        `radial-gradient(circle, ${hexToRgba(p.organic, 0.15)} 0%, transparent 70%)`;
+      document.querySelector('.blob-2').style.background =
+        `radial-gradient(circle, ${hexToRgba(p.highlight, 0.08)} 0%, transparent 70%)`;
+    }
+
+    function renderTokens() {
+      document.getElementById('tokenSwatches').innerHTML = tokens.map(t => `
+        <div class="token-swatch" style="background:${t.hex};">${t.name}</div>
+      `).join('');
+    }
+
+    renderPalettes();
+    renderTokens();
+  </script>
+</body>
+</html>
